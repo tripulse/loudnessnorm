@@ -1,4 +1,3 @@
-#[macro_use]
 use structopt::StructOpt;
 use hound::{WavReader, WavWriter};
 mod dsp;
