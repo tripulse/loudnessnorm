@@ -1,5 +1,6 @@
 # loudnessnorm
 [![Build Status](https://travis-ci.org/nullvideo/loudnessnorm.svg?branch=master)](https://travis-ci.org/nullvideo/loudnessnorm)
+![](https://ci.appveyor.com/api/projects/status/2jk2t1t23d72516f)
 
 An implementation of RMS based audio normalization *in Rust*. Currently, it's only able to decode WAVE files
 with 32-bit floating point samples (because it's easier to work with).
