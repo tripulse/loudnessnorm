@@ -1,4 +1,6 @@
 use structopt::StructOpt;
+use std::fs::File;
+use std::io::{stdin,Read};
 use hound::{WavReader, WavWriter};
 mod dsp;
 
@@ -7,7 +9,7 @@ mod dsp;
 by calculating the RMS then the gain is changed to \
 bring the average amplitude of the source signal to a target level.")]
 struct RootOptions {
-    #[structopt(about = "Input WAVE file to process", required = true)]
+    #[structopt(about = "Input WAVE file to process (- as STDIN)", required = true)]
     input: String,
 
     #[structopt(help = "Output File to dump the data", required = true)]
@@ -18,24 +20,36 @@ struct RootOptions {
 }
 
 fn main() {
-    // Parameters to instruct the program's behaviour.
-    // Basically, an interaction method for the CLI app.
-    let root_params = RootOptions::from_args();
+    let _root_params = RootOptions::from_args();
 
-    // Input file to grab the data from.
-    // The samples must be in the Float32 sample format.
-    // Otherwise the program would panic.
-    let mut wave_input = WavReader::open(root_params.input)
-        .unwrap();
+    /**
+     * Read the data from the STDIN or a *actual file*
+     * from the filesystem.
+     */
+    let mut wave_input = WavReader::new(
+        match _root_params.output.as_ref() {
+            "-" => Box::new(stdin()) as Box<dyn Read>,
+            _ => Box::new(File::create(&_root_params.output).unwrap()) as Box<dyn Read>
+        }
+    ).unwrap();
 
-    // Output file to put the data into.
+    /**
+     * The sample writer, encodes the data into
+     * the bistream and inherits the sample specifications
+     * as the source file.
+     */
     let mut wave_output = WavWriter::create(
-        root_params.output, wave_input.spec()
-        ).unwrap();
+        _root_params.output, wave_input.spec()
+    ).unwrap();
 
-    /* Apply the normalization filter by the DSP module. */
+    /**
+     * This is where the real magic happens.
+     * The signal sent to process via the DSP filter and later collected
+     * as 32-bit floating point samples which is written to a WAVE file.
+     */
     let mut wave_samples = wave_input.samples::<f32>().map(Result::unwrap).collect();
-    let signal_info = dsp::normalize_samples(&mut wave_samples, root_params.target_ampl).unwrap();
+    let signal_info = dsp::normalize_samples(&mut wave_samples, _root_params.target_ampl)
+                           .unwrap();
 
     /* Write each sample-data into the buffer which would be later
      * flushed to a file and that's the WAVE file of output
@@ -45,7 +59,8 @@ fn main() {
                                         .unwrap()
                         );
 
-    /* some nitty-gritty details to the user */
+    // Verbose information, that a user might be eager
+    // know about the source signal.
     println!(
         "Gain applied:   {} dBFS\
         \nRMS of signal: {} dBFS",
