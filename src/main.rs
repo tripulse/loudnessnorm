@@ -4,7 +4,7 @@ use hound::{WavReader, WavWriter};
 mod dsp;
 
 #[derive(StructOpt, Debug)]
-#[structopt(name="NormalizeAudio", version = "1.0-rc", about = "Normalizes the sample volume by calculating the RMS \
+#[structopt(about = "Normalizes the sample volume by calculating the RMS \
 then scale up samples values to the target value.")]
 struct RootOptions {
     #[structopt(about = "Input WAVE file to process", required = true)]
