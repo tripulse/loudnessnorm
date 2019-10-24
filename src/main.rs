@@ -9,7 +9,7 @@ mod dsp;
 by calculating the RMS then the gain is changed to \
 bring the average amplitude of the source signal to a target level.")]
 struct RootOptions {
-    #[structopt(about = "Input WAVE file to process (- as STDIN)", required = true)]
+    #[structopt(help = "Input WAVE file to process (- as STDIN)", required = true)]
     input: String,
 
     #[structopt(help = "Output File to dump the data", required = true)]
