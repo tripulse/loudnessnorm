@@ -4,25 +4,18 @@ environment:
 
     - channel: stable
       target: x86_64-pc-windows-msvc
-
     - channel: stable
       target: i686-pc-windows-msvc
-
     - channel: beta
       target: x86_64-pc-windows-msvc
-
     - channel: beta
       target: i686-pc-windows-msvc
-
     - channel: stable
       target: x86_64-pc-windows-gnu
-      
     - channel: stable
       target: i686-pc-windows-gnu
-      
     - channel: beta
       target: x86_64-pc-windows-gnu
-
     - channel: beta
       target: i686-pc-windows-gnu
 
@@ -34,3 +27,7 @@ install:
   - cargo -vV
   
 build: false
+
+artifacts:
+  - path: '**\*.exe' # get all the executables
+    name: loudnessnorm
