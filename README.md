@@ -8,15 +8,15 @@ with 32-bit floating point samples (because it's easier to work with).
 The loudness of the samples are normalized by calculating the **RMS** then the gain is changed to
 bring the average amplitude of the source signal to a target level (by default `0 dBFS`).
 
-## Building
-For Windows NT based systems just download the executable from AppVeyor. Navigate to one of the
-option listed there, head to ARTIFACTS tab and
-download the executable.
+## Installation
+For Windows NT based systems just download the executable from *AppVeyor*. Navigate to one of the
+option listed there then head to the ARTIFACTS tab and
+download the executable listed here.
 
-On Linux or Mac based systems, clone the repository. And, run these commands to settle things up.
-
+A package on crates.io is also present. If the toolchain for Rust is already present in the system then run this command (it's better because it natively
+compiles in your system).
 ```
-cargo
+cargo install loudnessnorm
 ```
 
 ---
