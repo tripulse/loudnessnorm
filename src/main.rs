@@ -4,13 +4,18 @@ use hound::{WavReader, WavWriter};
 mod dsp;
 
 #[derive(StructOpt, Debug)]
-#[structopt(about = "Normalizes the sample volume by calculating the RMS \
-then scale up samples values to the target value.")]
+#[structopt(version = "\0", about = "The loudness of the samples are normalized \
+by calculating the RMS then the gain is changed to \
+bring the average amplitude of the source signal to a target level.")]
 struct RootOptions {
     #[structopt(about = "Input WAVE file to process", required = true)]
     input: String,
-    #[structopt(about = "Output File to dump the data", required = true)]
-    output: String
+
+    #[structopt(help = "Output File to dump the data", required = true)]
+    output: String,
+
+    #[structopt(short, long, help = "Targetted average amplitude of signal", default_value = "1.0")]
+    target_ampl: f32
 }
 
 fn main() {
@@ -31,7 +36,7 @@ fn main() {
 
     /* Apply the normalization filter by the DSP module. */
     let mut wave_samples = wave_input.samples::<f32>().map(Result::unwrap).collect();
-    let signal_info = dsp::normalize_samples(&mut wave_samples, 1.0).unwrap();
+    let signal_info = dsp::normalize_samples(&mut wave_samples, root_params.target_ampl).unwrap();
 
     /* Write each sample-data into the buffer which would be later
      * flushed to a file and that's the WAVE file of output
@@ -43,8 +48,8 @@ fn main() {
 
     /* some nitty-gritty details to the user */
     println!(
-        "Gain applied:   {}dBFS\
-        \nRMS of signal: {}dBFS",
+        "Gain applied:   {} dBFS\
+        \nRMS of signal: {} dBFS",
         20.0 * signal_info.gain.log10(),
         20.0 * signal_info.rms.log10()
     );

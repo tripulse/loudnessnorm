@@ -1,12 +1,16 @@
+/// Information about the normalization process.
+/// Contains, computed values while the process.
+/// Use case is to, reduce the computation overhead.
 pub struct NormalizationInfo {
-    /// Root mean square of samples.
+    /// RMS (Root Mean Square) of all the samples in buffer.
     pub rms: f32,
     /// Gain applied to each sample which is calculated from the RMS.
     pub gain: f32
 }
 
-/// Normalizes the sample volume by calculating the RMS then
-/// scale up samples values to the target value.
+/// RMS based normalization function. This function calculates
+/// the RMS and how much gain need to reach the targetted
+/// average amplitude level.
 ///
 /// Formula to calculate RMS is:
 /// rms = sqrt(1/n * (x1**2 + x2**2 + ... + xn***2))
@@ -14,7 +18,7 @@ pub struct NormalizationInfo {
 pub fn normalize_samples
 (samples: &mut Vec<f32>, target_gain: f32) -> Result<NormalizationInfo, ()> {
     let signal_rms = f32::sqrt(samples.iter()
-        .fold(0.0,|_s, s| _s + (s * s))
+        .fold(0.0,|_s, s| _s + s.powf(2.0))
         / samples.len() as f32
     );
     let target_gain = target_gain / signal_rms;
