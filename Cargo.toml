@@ -1,17 +1,12 @@
 [package]
 name = "loudnessnorm"
+description = "An RMS based audio loudness normalizer"
+homepage = "https://github.com/nullvideo/loudnessnorm"
 version = "1.2.0"
 authors = ["nullvideo <bsantanu381@gmail.com>"]
-edition = "2018"
 license-file = "LICENSE"
-description = "An RMS based audio loudness normalizer"
-documentation = "https://github.com/nullvideo/loudnessnorm"
-include = ["src/**/*", "Cargo.toml"]
+edition = "2018"
 exclude = ["target/**/*", "*.lock", "*.yml"]
-publish = true
-
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 hound = "3.4.0"
