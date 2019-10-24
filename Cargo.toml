@@ -1,5 +1,5 @@
 [package]
-name = "NormalizeAudio"
+name = "loudnessnorm"
 version = "1.0.0"
 authors = ["nullvideo <bsantanu381@gmail.com>"]
 edition = "2018"
