@@ -1,6 +1,4 @@
 use structopt::StructOpt;
-use std::fs::File;
-use std::io::{stdin,Read};
 use hound::{WavReader, WavWriter};
 mod dsp;
 
@@ -22,15 +20,12 @@ struct RootOptions {
 fn main() {
     let _root_params = RootOptions::from_args();
 
-    /**
-     * Read the data from the STDIN or a *actual file*
-     * from the filesystem.
+    /* Create a WAVE reader object that reads
+     * and parses the WAVE data for us by supplying
+     * the file-name only.
      */
-    let mut wave_input = WavReader::new(
-        match _root_params.output.as_ref() {
-            "-" => Box::new(stdin()) as Box<dyn Read>,
-            _ => Box::new(File::create(&_root_params.output).unwrap()) as Box<dyn Read>
-        }
+    let mut wave_input = WavReader::open(
+        _root_params.input
     ).unwrap();
 
     /**
