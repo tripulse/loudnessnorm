@@ -1,4 +1,6 @@
 # loudnessnorm
+
+[![](https://img.shields.io/crates/v/loudnessnorm.svg)](https://crates.io/crates/loudnessnorm)
 [![](https://travis-ci.org/nullvideo/loudnessnorm.svg?branch=master)](https://travis-ci.org/nullvideo/loudnessnorm)
 [![](https://ci.appveyor.com/api/projects/status/2jk2t1t23d72516f?svg=true)](https://ci.appveyor.com/project/nullvideo/loudnessnorm)
 
