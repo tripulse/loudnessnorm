@@ -1,11 +1,7 @@
 [package]
 name = "loudnessnorm"
-description = """
-The loudness of the samples are normalized by calculating the **RMS** then the gain is changed to
-bring the average amplitude of the source signal to a target level (by default `0 dBFS`).
-"""
 version = "1.3.2"
-readme = "README.md"
+readme = "README.cr.md"
 homepage = "https://github.com/nullvideo/loudnessnorm"
 authors = ["nullvideo <bsantanu381@gmail.com>"]
 categories = ["multimedia", "multimedia::audio"]
@@ -17,4 +13,4 @@ exclude = ["target/**/*", "*.lock", "*.yml"]
 
 [dependencies]
 hound = "3.4.0"
-structopt = "0.3"
+clap = "2.33.0"
