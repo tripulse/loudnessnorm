@@ -1,6 +1,6 @@
 [package]
 name = "loudnessnorm"
-version = "1.3.2"
+version = "1.4.0"
 readme = "README.cr.md"
 homepage = "https://github.com/nullvideo/loudnessnorm"
 authors = ["nullvideo <bsantanu381@gmail.com>"]
