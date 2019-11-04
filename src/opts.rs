@@ -27,6 +27,7 @@ pub fn getargs<'a>() -> ArgMatches<'a> {
         )
         .arg(
             Arg::with_name("target-amplitude")
+            .long("target-ampl")
             .help("Target ampltiude to reach (linear power)")
             .takes_value(true)
         )
