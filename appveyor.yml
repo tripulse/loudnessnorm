@@ -19,9 +19,7 @@ build_script:
 artifacts:
   - path: target\$(target)\release\*.exe
     name: loudnessnorm-$(target)
-
-# Don't count every single commit unless the 
-# source code of the program changes.
+.
 only_commits:
   files:
     - src\**\*
