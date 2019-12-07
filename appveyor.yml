@@ -14,7 +14,7 @@ install:
   - set PATH=%PATH%;%USERPROFILE%\.cargo\bin
 
 cache: 
-  %USERPROFILE%\.cargo\bin
+  - %USERPROFILE%\.cargo\bin
 
 build_script:
   cargo build --release --target=%target%
