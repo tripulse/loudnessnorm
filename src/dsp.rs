@@ -31,14 +31,14 @@ pub mod DSPInfo {
   * https://en.wikipedia.org/wiki/Root_mean_square
   */
 pub fn normalize_samples
-(samples: &mut Vec<f32>, target_gain: f32) -> DSPInfo::NormalizationInfo {
+(samples: &mut Vec<f32>, target_gain: f32) -> (f32, f32) {
     let signal_rms = f32::sqrt(samples.iter()
         .fold(0.0,|_s, s| _s + s.powf(2.0))
         / samples.len() as f32
     );
 
-    /* Multiplier of samples to bring the average amplitude of
-       them to a target gain. */
+    // Gain factor to reach the target RMS based on the
+    // RMS of the signal, more samples = more flat amplitude.
     let target_gain = target_gain / signal_rms;
 
     /* Replace the samples with the samples 
@@ -48,8 +48,5 @@ pub fn normalize_samples
                     .map(|sample| sample * target_gain)
                     .collect();
 
-    DSPInfo::NormalizationInfo { 
-        rms: signal_rms,
-        gain: target_gain
-    }
+    (rms, gain)
 }
